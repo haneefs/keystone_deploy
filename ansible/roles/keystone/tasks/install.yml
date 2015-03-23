@@ -1,0 +1,51 @@
+---
+
+- name : keystone |  Install keystone from github
+  git:
+     repo: "https://github.com/openstack/keystone.git"
+     dest: "/opt/stack/openstack/keystone"
+     version: master
+     update :  true
+     
+     
+- name: keystone |  Install python-openstackclient from github
+  git:
+     repo: "https://github.com/openstack/python-openstackclient.git"
+     dest: "/opt/stack/openstack/openstackclient"
+     version: master
+     update :  true
+     
+- name: keystone | Install prerequisite packages for keystone
+  apt: state=latest name={{ item }}
+  sudo: yes
+  with_items: 
+    - python-mysqldb
+    - xmlsec1
+    - libsqlite3-dev 
+    - libldap2-dev 
+    - libsasl2-dev 
+    - libssl-dev 
+    - libxml2-dev 
+    - libxslt1-dev 
+    - libffi-dev
+
+- name: keystone | Install keystone
+  command: python setup.py install
+  args:
+    chdir: "/opt/stack/openstack/keystone"
+
+- name: keystone | Install Openstack client
+  command: python setup.py install
+  args:
+    chdir: "/opt/stack/openstack/openstackclient"
+   
+   
+- name: keystone | creates config directory
+  file: path=/etc/keystone state=directory
+  
+- name: keystone | creates log directory
+  file: path=/var/log/keystone state=directory  
+  
+- name: kesytone | Copies modwsgi directory
+  copy: src=keystone-modwsgi.conf dest=/etc/apache2/sites-available
+  

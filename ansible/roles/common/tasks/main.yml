@@ -1,0 +1,7 @@
+# Include all the variables
+
+---
+
+- include_vars: packages.yml
+
+- include: prerequisite.yml

@@ -1,0 +1,12 @@
+---
+# Install few tool and utilities
+
+- name: apache | Install apache and associated modules
+  apt: state=latest name={{ item }}
+  sudo: yes
+  with_items: 
+    - apache2
+    - libapache2-mod-wsgi
+    - libssl-dev
+    - libffi-dev
+    - libapache2-mod-shib2

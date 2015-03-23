@@ -1,0 +1,6 @@
+# Include all the variables
+
+---
+
+
+- include: install.yml

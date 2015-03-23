@@ -1,0 +1,7 @@
+---
+# Install few tool and utilities
+
+- name: Common | Install dev tools
+  apt: state=latest name={{ item.key }}
+  sudo: yes
+  with_dict: dev_env_packages
