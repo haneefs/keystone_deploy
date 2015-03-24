@@ -5,7 +5,7 @@
      repo: "https://github.com/openstack/keystone.git"
      dest: "/opt/stack/openstack/keystone"
      version: master
-     update :  true
+     update :  false
      
      
 - name: keystone |  Install python-openstackclient from github
@@ -13,7 +13,7 @@
      repo: "https://github.com/openstack/python-openstackclient.git"
      dest: "/opt/stack/openstack/openstackclient"
      version: master
-     update :  true
+     update :  false
      
 - name: keystone | Install prerequisite packages for keystone
   apt: state=latest name={{ item }}
@@ -38,14 +38,53 @@
   command: python setup.py install
   args:
     chdir: "/opt/stack/openstack/openstackclient"
+    
+- name: keystone | Install the requirements as setup doesn't install everything
+  command: pip install -U -r ./requirements.txt
+  args:
+    chdir: /opt/stack/openstack/keystone   
+    
+- name:  keystone | create a keystone group   
+  group: name=keystone state=present
    
+  #Modwsgi doesn't work with a user without home. So set it as /tmp
+- name: keystone | creates a keystone user 
+  user: name=keystone comment="Keystone user"  group=keystone  home=/tmp state=present
    
-- name: keystone | creates config directory
-  file: path=/etc/keystone state=directory
-  
-- name: keystone | creates log directory
-  file: path=/var/log/keystone state=directory  
+- name: keystone | creates config log and www directories
+  file: path={{ item }}  state=directory owner=keystone group=keystone
+  with_items:
+    - /etc/keystone
+    - /var/log/keystone
+    - /var/www/keystone 
   
 - name: kesytone | Copies modwsgi directory
-  copy: src=keystone-modwsgi.conf dest=/etc/apache2/sites-available
+  copy: src=keystone-modwsgi.conf dest=/etc/apache2/sites-available 
+
+- name:  keystone | Enable wsgi module in apache 
+  command: a2enmod wsgi
+
+- name:  keystone | Enable keystone site 
+  command: a2ensite keystone-modwsgi
+    
+- name: kesytone | Copies log and conf file 
+  copy: src={{ item }} dest=/etc/keystone
+  with_items:
+      - keystone.conf
+      - logging.conf
+      
+- name: keystone | Use these config file from installation itself
+  command: chdir=/opt/stack/openstack/keystone/etc cp  {{ item }}  /etc/keystone
+  with_items:
+    - keystone-paste.ini
+    - policy.json
+  
+- name: Create symlink to main and admin
+  file: src=/opt/stack/openstack/keystone/httpd/keystone.py  dest=/var/www/keystone/{{ item }} state=link
+  with_items:
+    - main
+    - admin
+  
+  
+  
   
