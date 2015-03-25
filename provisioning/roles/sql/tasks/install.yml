@@ -1,0 +1,14 @@
+---
+
+- name: sql | install mysql 
+  apt: pkg={{ item }}  state=latest 
+  sudo: yes
+  with_items:
+   - mysql-server
+   - python-mysqldb
+            
+- name: sql create  database for keystone
+  mysql_db: name=keystone state=present
+
+- name: sql | create keystone user
+  mysql_user: name=keystone host=localhost password=keystone priv=keystone.*:ALL

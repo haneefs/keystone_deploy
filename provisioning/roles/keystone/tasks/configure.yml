@@ -1,0 +1,10 @@
+---
+
+- name: keystone | configure  keystone.conf default section
+  command: crudini  --set /etc/keystone/keystone.conf {{ item }}
+  with_items:
+   - 'database connection  mysql://keystone:keystone@localhost/keystone'
+
+- name: keystone | creates the databse
+  command: keystone-manage db_sync
+ 

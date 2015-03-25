@@ -1,0 +1,2 @@
+- name: keystone | restart apache-server
+  service: name=apache2 state=restarted

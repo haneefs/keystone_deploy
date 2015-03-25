@@ -31,7 +31,7 @@ Vagrant.configure(2) do |config|
   	v.gui = true
   end
   config.vm.provision :ansible do |ansible|
-		ansible.playbook = "ansible/playbook.yml"
+		ansible.playbook = "provisioning/playbook.yml"
 		ansible.sudo = true
 		ansible.verbose = "vvv"
   end

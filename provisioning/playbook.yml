@@ -6,4 +6,6 @@
   roles:
      - common
      - apache
+     - sql
      - keystone
+     
