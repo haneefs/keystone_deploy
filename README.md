@@ -3,6 +3,9 @@ Keystone deploy using ansible
 
 Prequisite:
 
+    Install Virutal box:
+       https://www.virtualbox.org/wiki/Downloads
+    
 	Install Ansible:
 	    http://docs.ansible.com/intro_installation.html#latest-releases-via-apt-ubuntu
 	    sudo easy-install pip
