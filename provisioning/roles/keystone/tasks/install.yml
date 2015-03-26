@@ -33,7 +33,7 @@
   command: python setup.py install
   args:
     chdir: "/opt/stack/openstack/keystone"
-  notify: restart services
+  notify: restart apache2
 
 - name: keystone | Install Openstack client
   command: python setup.py install

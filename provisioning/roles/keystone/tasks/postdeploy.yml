@@ -1,0 +1,6 @@
+---
+
+- name: keystone | postdeploy 
+  file: path=/var/log/keystone/keystone.log owner=keystone group=keystone mode=0644 state=touch
+ 
+ 

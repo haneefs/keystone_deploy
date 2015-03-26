@@ -6,6 +6,7 @@
   with_items:
    - mysql-server
    - python-mysqldb
+  notify: restart mysql-server
             
 - name: sql create  database for keystone
   mysql_db: name=keystone state=present

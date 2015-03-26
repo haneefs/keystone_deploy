@@ -24,11 +24,11 @@ Vagrant.configure(2) do |config|
   end
   
   config.vm.box = "ubuntu/trusty64"
-  config.vm.hostname ="keystone-vagrant"
+  config.vm.hostname ="keystone-standalone-vagrant"
   config.vm.network :private_network, ip: "192.168.111.222"
      
   config.vm.provider "virtualbox" do |v|
-  	v.gui = true
+  	# v.gui = true
   end
   config.vm.provision :ansible do |ansible|
 		ansible.playbook = "provisioning/playbook.yml"
