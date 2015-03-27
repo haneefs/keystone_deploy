@@ -1,4 +1,5 @@
 # keystone_deploy
+
 Keystone deploy using ansible
 
 Prequisite:
@@ -33,19 +34,35 @@ Setup:
        if ansible fails inbetween just run
        
        vagrant provision
+       
+       This deploy provisions keystones and configures it to run under apache. It uses current master.
+       It also populates sample data for your try on. Password for all the same users are "password"
  
  
  To login to keystone node
         
-       #Make sure you are in keystone-deploy directory
-        vagrant ssh
+       # Make sure you are in keystone-deploy directory
+         vagrant ssh
         
  To verify keystone is running
          
-         from within the keystone node
+         Login to keystone node :  
          
-         curl -k -H "X-Auth-Token:ADMIN" http://localhost:35357/v3/domains | python -mjson.tool  
-            
+         vagrant ssh         
+        
+         
+         vagrant@keystone-standalone-vagrant:/opt/stack/openstack$ source stackrc 
+         vagrant@keystone-standalone-vagrant:/opt/stack/openstack$ openstack token issue
+         +------------+----------------------------------+
+         | Field      | Value                            |
+          +------------+----------------------------------+
+         | expires    | 2015-03-27T21:41:59.463012Z      |
+         | id         | 1357f6c04029409eacf6480391ddd067 |
+         | project_id | 148d23277cff4a70b5418c40e0df5639 |
+         | user_id    | 02d868d8a7c64852a51a1410e71288b9 |
+         +------------+----------------------------------+
+			 
+
   
   Advanced usage: <You may not need this>
   
