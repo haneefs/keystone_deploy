@@ -8,4 +8,5 @@
      - apache
      - sql
      - keystone
-     
+     - keystone_data
+

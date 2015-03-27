@@ -42,8 +42,18 @@ Setup:
         
  To verify keystone is running
          
-         from within the keysotne node
+         from within the keystone node
          
          curl -k -H "X-Auth-Token:ADMIN" http://localhost:35357/v3/domains | python -mjson.tool  
             
- 
+  
+  Advanced usage: <You may not need this>
+  
+     In order to running custom or specific task associate tags with the task and run with tags
+  	  
+  	   ansible-playbook -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory --private-key=.vagrant/machines/default/virtualbox/private_key -u vagrant  --tags <tagName>  <playbook>
+  	   
+  	   e.g ansible-playbook -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory --private-key=.vagrant/machines/default/virtualbox/private_key -u vagrant  --tags data provisioning/keystone_standalone.yml
+    
+    Just syntax check for the playbook
+       ansible-playbook -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory --private-key=.vagrant/machines/default/virtualbox/private_key -u vagrant  --check provisioning/keystone_standalone.yml

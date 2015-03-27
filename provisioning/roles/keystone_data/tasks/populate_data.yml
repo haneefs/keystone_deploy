@@ -1,0 +1,15 @@
+---
+
+- name: keystone_data | populate data | copy data file
+  copy: src=sample_domain_data.sh dest=/tmp mode=0777
+  sudo: yes
+  tags: data
+  
+- name: keystone_data | populate data | runs the sample data
+  command: "{{ item }}" 
+  with_items:     
+     /tmp/sample_domain_data.sh  
+  environment:
+     ADMIN_PASSWORD: password
+  tags: data
+  

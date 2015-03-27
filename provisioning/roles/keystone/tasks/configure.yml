@@ -7,4 +7,7 @@
 
 - name: keystone | creates the databse
   command: keystone-manage db_sync
+  
+- name: keystone | creates the databse
+  command: keystone-manage fernet_setup  --keystone-user keystone --keystone-group keystone
  

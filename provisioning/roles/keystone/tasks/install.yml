@@ -33,8 +33,7 @@
   command: python setup.py install
   args:
     chdir: "/opt/stack/openstack/keystone"
-  notify: restart apache2
-
+ 
 - name: keystone | Install Openstack client
   command: python setup.py install
   args:
@@ -58,6 +57,7 @@
     - /etc/keystone
     - /var/log/keystone
     - /var/www/keystone 
+    - /etc/keystone/fernet-keys/
   
 - name: kesytone | Copies modwsgi directory
   copy: src=keystone-modwsgi.conf dest=/etc/apache2/sites-available 
@@ -80,12 +80,13 @@
     - keystone-paste.ini
     - policy.json
   
-- name: Create symlink to main and admin
+- name: keystone | create symlink to main and admin
   file: src=/opt/stack/openstack/keystone/httpd/keystone.py  dest=/var/www/keystone/{{ item }} state=link
   with_items:
     - main
     - admin
   
-  
+- name: keystone | copy stackrc file for refeence
+  copy: src=stackrc dest=/opt/stack/openstack mode=0666
   
   
