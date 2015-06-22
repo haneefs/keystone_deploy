@@ -29,6 +29,18 @@
     - libxslt1-dev 
     - libffi-dev
 
+- name: keystone | Remove the stop pip 
+  apt: name=pip state=absent
+
+- name: keystone | Install pip via easy_install as stock pip is old version
+# state attribute is available only in ansible 2.0
+# easy_install: name=pip state=latest
+  command: easy_install -U pip
+
+- name: keystone | remove the hash for the pip
+  command: hash -r 
+  ignore_errors: true
+
 - name: keystone | Install keystone
   command: python setup.py install
   args:
@@ -42,7 +54,12 @@
 - name: keystone | Install the requirements as setup doesn't install everything
   command: pip install -U -r ./requirements.txt
   args:
-    chdir: /opt/stack/openstack/keystone   
+    chdir: /opt/stack/openstack/keystone
+    
+- name: keystone | Install the requirements as setup doesn't install everything
+  command: pip install -U -r ./requirements.txt
+  args:
+    chdir: /opt/stack/openstack/openstackclient
     
 - name:  keystone | create a keystone group   
   group: name=keystone state=present
