@@ -4,7 +4,7 @@
   git:
      repo: "https://github.com/openstack/keystone.git"
      dest: "/opt/stack/openstack/keystone"
-     version: master
+     version: "{{ branch_name }}" 
      update :  false
      
      
@@ -12,7 +12,7 @@
   git:
      repo: "https://github.com/openstack/python-openstackclient.git"
      dest: "/opt/stack/openstack/openstackclient"
-     version: master
+     version: "{{ branch_name }}" 
      update :  false
      
 - name: keystone | Install prerequisite packages for keystone

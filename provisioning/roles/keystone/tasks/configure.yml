@@ -7,7 +7,10 @@
 
 - name: keystone | creates the databse
   command: keystone-manage db_sync
+
+- name: keystone | creates the  bootstrap user
+  command: keystone-manage bootstrap  --bootstrap-password password --bootstrap-username admin
   
-- name: keystone | creates the databse
+- name: keystone | creates the fernet keys
   command: keystone-manage fernet_setup  --keystone-user keystone --keystone-group keystone
  

@@ -29,6 +29,7 @@ openstack --os-url http://localhost:35357/v3 --os-identity-api-version 3 --os-to
 openstack --os-url http://localhost:35357/v3 --os-identity-api-version 3 --os-token=ADMIN user create admin --domain default --password password
 openstack --os-url http://localhost:35357/v3 --os-identity-api-version 3 --os-token=ADMIN project create admin --domain default
 openstack --os-url http://localhost:35357/v3 --os-identity-api-version 3 --os-token=ADMIN role add --user admin --project admin admin
+openstack --os-url http://localhost:35357/v3 --os-identity-api-version 3 --os-token=ADMIN role add --user admin --domain default admin
 
 #Create a service
 openstack --os-url http://localhost:35357/v3 --os-identity-api-version 3 --os-token=ADMIN  service create --name keystone identity
